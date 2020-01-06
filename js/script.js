@@ -40,38 +40,36 @@ function generateTitleLinks(customSelector = ' ') {
     link.addEventListener('click', titleClickHandler);
   }
 }
+
 function generateTags() {
   let allTags = {};
-
   const articles = document.querySelectorAll(optArticleSelector);
   const listTagWrapper = document.querySelector(optTagsListSelector);
-
   for (let article of articles) {
     const tagWrapper = article.querySelector(optArticleTagsSelector);
-
     let html = '';
     let tag = '';
+    let allTagsHTML = '';
     const articleTags = article.getAttribute('data-tags');
-
     const articleTagsArray = articleTags.split(' ');
-
     for (tag of articleTagsArray) {
       const linkHTML = '<li><a href="#' + tag + '">' + tag + '</a></li> ';
 
-      // if (allTags.indexOf(linkHTML) == -1) {
-      //   allTags.push(linkHTML);
-      // }
       if (!allTags.hasOwnProperty(tag)) {
         allTags[tag] = 1;
       } else {
         allTags[tag]++;
       }
+  
+      for(let tag in allTags) {
+        allTagsHTML += tag + ' (' allTags[tag] + ')';
+      }
       html = html + linkHTML;
     }
+   
+
     tagWrapper.innerHTML = html;
-    const tagList = document.querySelector('.tags');
-    //tagList.innerHTML = allTags.join(' ');
-    console.log(allTags);
+    listTagWrapper.innerHTML=allTagsHTML;
   }
 }
 function generateAuthors() {
