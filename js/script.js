@@ -41,14 +41,14 @@ function generateTitleLinks(customSelector = ' ') {
   }
 }
 function generateTags() {
-  let allTags = [];
+  let allTags = {};
+
   const articles = document.querySelectorAll(optArticleSelector);
   const listTagWrapper = document.querySelector(optTagsListSelector);
 
   for (let article of articles) {
     const tagWrapper = article.querySelector(optArticleTagsSelector);
 
-    console.log(listTagWrapper);
     let html = '';
     let tag = '';
     const articleTags = article.getAttribute('data-tags');
@@ -58,14 +58,20 @@ function generateTags() {
     for (tag of articleTagsArray) {
       const linkHTML = '<li><a href="#' + tag + '">' + tag + '</a></li> ';
 
-      if (allTags.indexOf(linkHTML) == -1) {
-        allTags.push(linkHTML);
+      // if (allTags.indexOf(linkHTML) == -1) {
+      //   allTags.push(linkHTML);
+      // }
+      if (!allTags.hasOwnProperty(tag)) {
+        allTags[tag] = 1;
+      } else {
+        allTags[tag]++;
       }
       html = html + linkHTML;
     }
     tagWrapper.innerHTML = html;
     const tagList = document.querySelector('.tags');
-    tagList.innerHTML = allTags.join(' ');
+    //tagList.innerHTML = allTags.join(' ');
+    console.log(allTags);
   }
 }
 function generateAuthors() {
